@@ -1,85 +1,84 @@
-import javax.swing.AbstractButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * This is the board that is used for play.
+ * This class will hold the buttons and basically 
+ *  hold everything that the player has to interact with. 
+ * It will hold the logic for making moves.
  * 
  * @author Kyle Bouwman
  * @version 0.0.1
  */
-public class Board extends JFrame implements ActionListener
+public abstract class Board extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
+	private Game game;
 	private XOButton[] butts = new XOButton[9];
-	private JPanel boardPanel = new JPanel();
-	private JPanel scorePanel = new JPanel();
-	private byte turn;
-	private boolean isGameOver;
-
+	protected byte turn;
+	
 	// instance variables - replace the example below with your own
-    public static void main(String[] args) {
-        new Board().setVisible(true);
-    }//main
-    public Board(){
-    	super("TicTacToe");
-    	this.turn = 0;
-    	this.isGameOver = false;
-    	setSize(600,600);
-    	setResizable(false);
-    	setDefaultCloseOperation(EXIT_ON_CLOSE);
-    	boardPanel.setLayout(new GridLayout(3,3));
-    	
-    	for(int i = 0; i < butts.length; i++){
-    		butts[i] = new XOButton();
-    		butts[i].setActionCommand("click");
-    		butts[i].addActionListener(this);
-    		boardPanel.add(butts[i]);
-    	}
-    	add(boardPanel);
-    	
-    	JLabel text = new JLabel("This is my text");
-    	scorePanel.add(text);
-    	add(scorePanel, BorderLayout.SOUTH);
-    	
-    	
-    }//constructor
-    
-    private boolean isGameOver()
+    public Board(Game game)
     {
-    	for(int i = 0; i < butts.length; i++){
-    		if(!butts[i].isFilled()){
-    			this.isGameOver = false;
-    			return this.isGameOver;
-    		}
+    	this.game = game;
+		setLayout(new GridLayout(3,3));
+		this.turn = 0;
+		
+		for(int i = 0; i < butts.length; i++){
+    		butts[i] = new XOButton();
+    		butts[i].setActionCommand("" + i);
+    		butts[i].addActionListener(this);
+    		add(butts[i]);
     	}
-    	this.isGameOver = true;
-    	return this.isGameOver;
-    }
+    }//constructor
+
+    public boolean isGameOver()
+    {
+    	for(int i = 0; i < butts.length; i++)
+    		if(!butts[i].isFilled())
+    			return false;
+    	return true;
+    }//end gameover
     
+    private int[] getButtCoords(int i)
+    {
+    	int[] coords = {i/3, i%3};
+    	
+    	return coords;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-    	XOButton obj = (XOButton) ((AbstractButton) e.getSource());
+    	XOButton obj = (XOButton)(e.getSource());
+    	int[] coords = this.getButtCoords(Integer.parseInt(e.getActionCommand()));
+    	byte row = (byte)(coords[0]), col = (byte)(coords[1]);
+    	
+    	//TODO endgame
     	if(turn == -1) System.exit(1);
-    	turn %= 2;
+    	
+    	
+    	turn %= 2;//this sets who's turn it is
+    	this.game.turn(turn, row, col);
 		switch(turn){
 		case 0:
-			obj.setIconX();
+			if(!obj.isFilled()) {
+				obj.setIconX();
+				if(!this.isGameOver())turn++;
+				else turn = -1;
+			}
 			break;
 		case 1: 
-			obj.setIconO();
+			if(!obj.isFilled()) {
+				obj.setIconO();
+				if(!this.isGameOver())turn++;
+				else turn = -1;
+			}
 			break;
 		}//end switch
-		if(!this.isGameOver()){
-			turn++;
-		}//end if
-		else {
-			turn = -1;
-		}
-    	
     }//end act
+    
+    
+    
+    
 }//class
