@@ -3,7 +3,7 @@ import javax.swing.JButton;
 
 /**
  * This is the XOButton Object, a child of JButton. 
- * @author Kyle Bouwman
+ * 
  * @version 0.0.1
  * 
  *

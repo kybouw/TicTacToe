@@ -1,3 +1,4 @@
+import java.awt.event.ActionEvent;
 
 public class HardBoard extends Board {
 
@@ -9,5 +10,11 @@ public class HardBoard extends Board {
 	public HardBoard(Game game)
 	{
 		super(game);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
