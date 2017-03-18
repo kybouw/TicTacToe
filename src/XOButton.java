@@ -29,6 +29,11 @@ public class XOButton extends JButton {
 		setIcon(O_ICON);
 		this.isFilled = true;
 	}
+	public void setIconClear()
+	{
+		setIcon(null);
+		this.isFilled = false;
+	}
 	public boolean isFilled()
 	{
 		return this.isFilled;

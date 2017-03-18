@@ -15,7 +15,7 @@ public abstract class Board extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 	protected Game game;
 	private XOButton[] butts = new XOButton[9];
-	protected byte turn;
+	protected int turn;
 	
 	// instance variables - replace the example below with your own
     public Board(Game game)
@@ -37,8 +37,13 @@ public abstract class Board extends JPanel implements ActionListener
     	int[] coords = {i/3, i%3};
     	return coords;
     }
+    
+    protected void startOver()
+    {
+    	for(int i = 0; i < butts.length; i++)
+    		butts[i].setIconClear();
+    }
 
-    @Override
-    public abstract void actionPerformed(ActionEvent e);//end act
+    public abstract void actionPerformed(ActionEvent e);
     
 }//class
