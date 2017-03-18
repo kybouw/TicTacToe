@@ -1,6 +1,13 @@
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,14 +27,19 @@ public class Game extends JFrame {
 	private int[][] gameBoard;
 	private Board board;
 	private JPanel scorePanel;
+	private JLabel score;
 	/**
-	 * This can have 1 of 3 values {
+	 * This JButton restarts the game
+	 */
+	private JButton restartGame;
+	/**
+	 * This can have 1 of 3 values:
 	 * <ul>
 	 * <li>0: This is the PvP mode</li>
 	 * <li>1: This is the EasyAI mode</li>
 	 * <li>2: This is the HardAI mode</li>
 	 * </ul>
-	 * }
+	 * 
 	 */
 	private int gameMode;
 
@@ -42,6 +54,15 @@ public class Game extends JFrame {
 		setSize(600, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		//TODO JOptionPane difficulty selector
+		String[] diffs = {"PvP", "Easy", "Hard"};
+		gameMode = JOptionPane.showOptionDialog(this,
+				"Please select a game mode", 
+				"Difficulty Selection", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE, 
+				null, 
+				diffs, diffs[0]);
+		
 		switch (gameMode) {
 		case 0:
 			board = new PvPBoard(this);
@@ -52,17 +73,42 @@ public class Game extends JFrame {
 		case 2:
 			board = new HardBoard(this);
 			break;
+		case -1:
+			System.exit(0);
 		default:
 			board = new PvPBoard(this);
 			break;
 		}// end switch
+		add(board);
 
 		this.gameBoard = new int[3][3];
 		this.scorePanel = new JPanel();
-		add(board);
-
-		JLabel text = new JLabel("This is my text");
-		scorePanel.add(text);
+		
+		this.scorePanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		score = new JLabel("Player X's turn...");
+		restartGame = new JButton("Start Over");
+		restartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				board.startOver();
+				gameBoard = new int[3][3];
+				score.setText("Player X's turn...");
+			}
+		});
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		scorePanel.add(score, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0;
+		c.gridwidth = 1;
+		c.gridx = 2;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.LINE_END;
+		scorePanel.add(restartGame, c);
 		add(scorePanel, BorderLayout.SOUTH);
 	}// end constructor
 
@@ -71,15 +117,19 @@ public class Game extends JFrame {
 		switch(player){
 		case 0:
 			System.out.println("It was a tie!");
+			this.score.setText("It's a tie!");
 			return true;
 		case 1:
 			System.out.println("Player X wins!");
+			this.score.setText("Player X wins!");
 			return true;
 		case 2:
 			System.out.println("Player O wins!");
+			this.score.setText("Player O wins!");
 			return true;
 		default:
 			System.out.println("Idk what happened");
+			this.score.setText("Error...");
 			return true;
 		}//end switch
 	}
@@ -93,6 +143,14 @@ public class Game extends JFrame {
 			return gameOver(2);
 		else
 			return false;
+	}
+	
+	private void changeScoreText()
+	{
+		if(this.score.getText().contains("X"))
+			this.score.setText("Player O's turn...");
+		else if(this.score.getText().contains("O"))
+			this.score.setText("Player X's turn...");
 	}
 	
 	private boolean isBoardFilled()
@@ -120,9 +178,20 @@ public class Game extends JFrame {
 		return this.isBoardFilled();
 	}// end gameover
 
-	public boolean turn(int player, int row, int col) {
+	/**
+	 * This triggers the actions that take place whenever a player takes their turn
+	 * @param player The number of the player who's turn it is (1:X, 2:O)
+	 * @param row The row of the button that was pressed
+	 * @param col The col of the button that was pressed
+	 * @return whether or not the game is over
+	 */
+	protected boolean turn(int player, int row, int col) {
+		
 		gameBoard[row][col] = player;
-		return isGameOver();
+		boolean ret = isGameOver();
+		if(!ret)
+			changeScoreText();
+		return ret;
 	}
 
 }
