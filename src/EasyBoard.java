@@ -31,9 +31,7 @@ public class EasyBoard extends Board {
     			butts[i].setIconO();
     			game.turn(2, arow, acol);
     			aiTookTurn = true;
-    		}
-    			
-    	}
-    	
-	}
+    		}//end if
+    	}//end while
+	}//end act
 }

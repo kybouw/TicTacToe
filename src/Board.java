@@ -14,7 +14,7 @@ public abstract class Board extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	protected Game game;
-	private XOButton[] butts = new XOButton[9];
+	protected XOButton[] butts = new XOButton[9];
 	protected int turn;
 	
 	// instance variables - replace the example below with your own

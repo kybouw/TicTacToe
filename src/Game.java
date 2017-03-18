@@ -24,7 +24,7 @@ public class Game extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int[][] gameBoard;
+	int[][] gameBoard;
 	private Board board;
 	private JPanel scorePanel;
 	private JLabel score;
@@ -154,7 +154,7 @@ public class Game extends JFrame {
 			this.score.setText("Player X's turn...");
 	}
 	
-	private boolean isBoardFilled()
+	boolean isBoardFilled()
 	{
 		for(int r = 0; r < 3; r++)
 			for(int c = 0; c < 3; c++)
@@ -163,7 +163,7 @@ public class Game extends JFrame {
 		return gameOver(0);
 	}//end isBoardFilled
 
-	private boolean isGameOver() {
+	boolean isGameOver() {
 		// This loops checks each row/col for a streak
 		for (int var = 0; var < 3; var++)
 			if(streak(gameBoard[var][0], gameBoard[var][1], gameBoard[var][2]) ||
@@ -186,13 +186,11 @@ public class Game extends JFrame {
 	 * @param col The col of the button that was pressed
 	 * @return whether or not the game is over
 	 */
-	protected boolean turn(int player, int row, int col) {
+	void turn(int player, int row, int col) {
 		
 		gameBoard[row][col] = player;
-		boolean ret = isGameOver();
-		if(!ret)
+		if(!isGameOver())
 			changeScoreText();
-		return ret;
-	}
+	}//end turn
 
 }
