@@ -114,6 +114,7 @@ public class Game extends JFrame {
 
 	private boolean gameOver(int player)
 	{
+		board.endGame();
 		switch(player){
 		case 0:
 			System.out.println("It was a tie!");

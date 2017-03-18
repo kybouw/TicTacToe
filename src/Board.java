@@ -22,14 +22,12 @@ public abstract class Board extends JPanel implements ActionListener
     {
     	this.game = game;
 		setLayout(new GridLayout(3,3));
-		this.turn = 0;
-		
 		for(int i = 0; i < butts.length; i++){
     		butts[i] = new XOButton();
     		butts[i].setActionCommand("" + i);
-    		butts[i].addActionListener(this);
     		add(butts[i]);
     	}
+		startGame();
     }//constructor
     
     protected int[] getButtCoords(int i)
@@ -42,6 +40,19 @@ public abstract class Board extends JPanel implements ActionListener
     {
     	for(int i = 0; i < butts.length; i++)
     		butts[i].setIconClear();
+    	startGame();
+    }
+    
+    private void startGame()
+    {
+    	for(int i = 0; i < butts.length; i++)
+    		butts[i].addActionListener(this);
+    	this.turn = 0;
+    }
+    protected void endGame()
+    {
+    	for(int i = 0; i < butts.length; i++)
+    		butts[i].removeActionListener(this);
     }
 
     public abstract void actionPerformed(ActionEvent e);
