@@ -15,6 +15,25 @@ public class EasyBoard extends Board {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		XOButton obj = (XOButton)(e.getSource());
+    	int[] coords = this.getButtCoords(Integer.parseInt(e.getActionCommand()));
+    	
+    	if(!obj.isFilled()) {
+    		obj.setIconX();
+    		game.turn(1, coords[0], coords[1]);
+    	}
+    	boolean aiTookTurn = (game.isGameOver())? true:false;
+    	int arow , acol;
+    	while(!aiTookTurn){
+    		arow = (int)(Math.random()*3); acol = (int)(Math.random()*3);
+    		int i = (3*arow)+acol;
+    		if(!butts[i].isFilled()){
+    			butts[i].setIconO();
+    			game.turn(2, arow, acol);
+    			aiTookTurn = true;
+    		}
+    			
+    	}
+    	
 	}
 }

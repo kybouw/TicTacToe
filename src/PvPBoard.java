@@ -15,22 +15,22 @@ public class PvPBoard extends Board {
     public void actionPerformed(ActionEvent e) {
     	XOButton obj = (XOButton)(e.getSource());
     	int[] coords = this.getButtCoords(Integer.parseInt(e.getActionCommand()));
-    	int row = (coords[0]), col = (coords[1]);
     	
     	turn %= 2;//this sets who's turn it is
 		switch(turn){
 		case 0:
 			if(!obj.isFilled()) {
 				obj.setIconX();
-				if(!game.turn(turn+1, row, col))turn++;
+				game.turn(turn+1, coords[0], coords[1]);
 			}
 			break;
 		case 1: 
 			if(!obj.isFilled()) {
 				obj.setIconO();
-				if(!game.turn(turn+1, row, col))turn++;
+				game.turn(turn+1, coords[0], coords[1]);
 			}
 			break;
 		}//end switch
+		turn++;
     }//end act
 }
