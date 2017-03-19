@@ -29,14 +29,14 @@ public class EasyBoard extends Board {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		XOButton obj = (XOButton)(e.getSource());
-    	int[] coords = this.getButtCoords(Integer.parseInt(e.getActionCommand()));
-    	
-    	if(!obj.isFilled()) {
-    		obj.setIconX();
-    		game.turn(1, coords[0], coords[1]);
-    	}
+		int[] coords = this.getButtCoords(Integer.parseInt(e.getActionCommand()));
+		if(!obj.isFilled()) {
+			obj.setIconX();
+			game.turn(1, coords[0], coords[1]);
+		}else{
+			return;
+		}
     	boolean aiTookTurn = (game.isGameOver())? true:false;
     	int arow , acol;
     	while(!aiTookTurn){
