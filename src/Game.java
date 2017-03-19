@@ -24,9 +24,21 @@ public class Game extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * A 2D array used for Game's analysis of state and moves.
+	 */
 	int[][] gameBoard;
+	/**
+	 * The JPanel that contains the buttons and gameMode logic
+	 */
 	private Board board;
+	/**
+	 * This is the panel underneath the board. It contains buttons and text.
+	 */
 	private JPanel scorePanel;
+	/**
+	 * This is the text that goes onto scorePanel
+	 */
 	private JLabel score;
 	/**
 	 * This JButton restarts the game
@@ -43,11 +55,21 @@ public class Game extends JFrame {
 	 */
 	private int gameMode;
 
+	/**
+	 * Main method
+	 * @param args usually empty
+	 */
 	public static void main(String[] args) {
 
 		new Game().setVisible(true);
 	}// end main
 
+	/**
+	 * Constructor
+	 * Initializes the JFrame window, 
+	 * allows for difficulty selection, 
+	 * adds and formats all JComponents in the Game
+	 */
 	public Game() {
 		super("TicTacToe");
 		setResizable(false);
@@ -89,6 +111,10 @@ public class Game extends JFrame {
 		score = new JLabel("Player X's turn...");
 		restartGame = new JButton("Start Over");
 		restartGame.addActionListener(new ActionListener() {
+			/**
+			 * Specifies what happens when a player decides to start the game over.
+			 * Resets the board and the score panel.
+			 */
 			public void actionPerformed(ActionEvent e) 
 			{
 				board.startOver();
@@ -112,6 +138,30 @@ public class Game extends JFrame {
 		add(scorePanel, BorderLayout.SOUTH);
 	}// end constructor
 
+	/**
+	 * This evaluates whether or not three specified values are owned by the same player.
+	 * @param one the first value
+	 * @param two the second value
+	 * @param three the third value
+	 * @return true if it is 3 in a row, and passes the winner to gameOver
+	 */
+	private boolean streak(int one, int two, int three)
+	{
+		int check = (one*two*three);
+		if (1 == check)
+			return gameOver(1);
+		else if (8 == check)
+			return gameOver(2);
+		else
+			return false;
+	}
+
+	/**
+	 * Ends the game in reference to Game, calls the board's endGame method
+	 * Changes the text in the score panel to reflect game results
+	 * @param player 0 for tie, 1 for X, and 2 for O
+	 * @return true
+	 */
 	private boolean gameOver(int player)
 	{
 		board.endGame();
@@ -132,17 +182,9 @@ public class Game extends JFrame {
 		}//end switch
 	}
 	
-	private boolean streak(int one, int two, int three)
-	{
-		int check = (one*two*three);
-		if (1 == check)
-			return gameOver(1);
-		else if (8 == check)
-			return gameOver(2);
-		else
-			return false;
-	}
-	
+	/**
+	 * Changes the text from "player X's turn" to "Player O's turn" and vice versa
+	 */
 	private void changeScoreText()
 	{
 		if(this.score.getText().contains("X"))
@@ -151,6 +193,10 @@ public class Game extends JFrame {
 			this.score.setText("Player X's turn...");
 	}
 	
+	/**
+	 * Determines whether or not the board is entirely filled
+	 * @return true if there are no more empty spots
+	 */
 	boolean isBoardFilled()
 	{
 		for(int r = 0; r < 3; r++)
@@ -160,19 +206,21 @@ public class Game extends JFrame {
 		return gameOver(0);
 	}//end isBoardFilled
 
+	/**
+	 * Checks to see if the game is over
+	 * @return true if there is either a winner or the board is full
+	 */
 	boolean isGameOver() {
 		// This loops checks each row/col for a streak
 		for (int var = 0; var < 3; var++)
 			if(streak(gameBoard[var][0], gameBoard[var][1], gameBoard[var][2]) ||
 			   streak(gameBoard[0][var], gameBoard[1][var], gameBoard[2][var]) )
 				return true;
-		
 		//diagonal streaks
 		if(streak(gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]))
 			return true;
 		else if(streak(gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]))
 			return true;
-
 		return this.isBoardFilled();
 	}// end gameover
 
@@ -181,10 +229,8 @@ public class Game extends JFrame {
 	 * @param player The number of the player who's turn it is (1:X, 2:O)
 	 * @param row The row of the button that was pressed
 	 * @param col The col of the button that was pressed
-	 * @return whether or not the game is over
 	 */
 	void turn(int player, int row, int col) {
-		
 		gameBoard[row][col] = player;
 		if(!isGameOver())
 			changeScoreText();

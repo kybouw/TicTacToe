@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
-
+/**
+ * The easy board. The AI will just randomly place their pieces in empty cells.
+ * 
+ */
 public class EasyBoard extends Board {
 
 	/**
@@ -7,11 +10,23 @@ public class EasyBoard extends Board {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor for EasyBoard
+	 * @param game the Game object that the board is contained in
+	 */
 	public EasyBoard(Game game)
 	{
 		super(game);
 	}
 
+	/**
+	 * Logic for what happens when a button is pressed.
+	 * Checks to see if the cell is empty, 
+	 * places X there, 
+	 * passes move to Game, 
+	 * places O in a random empty cell on the board, 
+	 * passes the move to Game.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

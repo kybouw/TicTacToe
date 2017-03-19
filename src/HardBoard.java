@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
-
+/**
+ * This is the Hard game mode. The board will deliberately try to beat the player.
+ *
+ */
 public class HardBoard extends Board {
 
 	/**
@@ -7,11 +10,21 @@ public class HardBoard extends Board {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor for HardBoard
+	 * @param game The Game that the board is contained in
+	 */
 	public HardBoard(Game game)
 	{
 		super(game);
 	}
-	
+	/**
+	 * Logic for what happens when the player selects a cell.
+	 * Make sure the cell is empty, 
+	 * makes move, 
+	 * passes move to Game, 
+	 * initiates AI's turn
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -25,11 +38,17 @@ public class HardBoard extends Board {
 		if(!game.isGameOver()) takeAITurn();
 	}
 
+	/**
+	 * Initiates the AI's turn
+	 */
 	private void takeAITurn()
 	{
 		tagWins();
 	}
-	
+	/**
+	 * Checks to see if the AI has any winning moves
+	 * @return true when move is completed
+	 */
 	private boolean tagWins()
 	{
 
@@ -37,25 +56,47 @@ public class HardBoard extends Board {
 		
 		return blockWins();
 	}
+	/**
+	 * Checks to see if AI can block any winning moves
+	 * @return true when move is completed
+	 */
 	private boolean blockWins()
 	{
 		if(checkThrees(false)) return true;
 		return blockOnes();
 	}
+	/**
+	 * Tries to block the player from building 'two in a row'
+	 * @return true when move is completed
+	 */
 	private boolean blockOnes()
 	{
 		
 		return tagCorners();
 	}
+	/**
+	 * Tries to claim a corner piece
+	 * @return true when move is completed
+	 */
 	private boolean tagCorners()
 	{
 		return tagEmpty();
 	}
+	/**
+	 * Picks a random empty spot
+	 * @return true when move is completed
+	 */
 	private boolean tagEmpty()
 	{
 		return true;
 	}
 
+	/**
+	 * Checks to see if there is an opportunity for either player to score.
+	 * Makes and passes the move to Game
+	 * @param winner true will search for AI opportunities to win, false will search for player's opportunity to win
+	 * @return true if there is an opportunity for the specified player to score
+	 */
 	private boolean checkThrees(boolean winner)
 	{
 		int match, opp;
