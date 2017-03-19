@@ -77,30 +77,7 @@ public class Game extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//TODO JOptionPane difficulty selector
-		String[] diffs = {"PvP", "Easy", "Hard"};
-		gameMode = JOptionPane.showOptionDialog(this,
-				"Please select a game mode", 
-				"Difficulty Selection", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE, 
-				null, 
-				diffs, diffs[0]);
-		
-		switch (gameMode) {
-		case 0:
-			board = new PvPBoard(this);
-			break;
-		case 1:
-			board = new EasyBoard(this);
-			break;
-		case 2:
-			board = new HardBoard(this);
-			break;
-		case -1:
-			System.exit(0);
-		default:
-			board = new PvPBoard(this);
-			break;
-		}// end switch
+		changeGameMode();
 		add(board);
 
 		this.gameBoard = new int[3][3];
@@ -131,10 +108,16 @@ public class Game extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0;
 		c.gridwidth = 1;
-		c.gridx = 2;
+		c.gridx = 3;
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.LINE_END;
 		scorePanel.add(restartGame, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1;
+		c.gridwidth = 1;
+		c.gridx = 2;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.LINE_END;
 		add(scorePanel, BorderLayout.SOUTH);
 	}// end constructor
 
@@ -156,6 +139,36 @@ public class Game extends JFrame {
 			return false;
 	}
 
+	/**
+	 * 
+	 */
+	private void changeGameMode()
+	{
+		String[] diffs = {"PvP", "Easy", "Hard"};
+		gameMode = JOptionPane.showOptionDialog(this,
+				"Please select a game mode", 
+				"Difficulty Selection", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE, 
+				null, 
+				diffs, diffs[0]);
+		
+		switch (gameMode) {
+		case 0:
+			this.board = new PvPBoard(this);
+			break;
+		case 1:
+			this.board = new EasyBoard(this);
+			break;
+		case 2:
+			this.board = new HardBoard(this);
+			break;
+		case -1:
+			System.exit(0);
+		default:
+			this.board = new PvPBoard(this);
+			break;
+		}// end switch
+	}
 	/**
 	 * Ends the game in reference to Game, calls the board's endGame method
 	 * Changes the text in the score panel to reflect game results
