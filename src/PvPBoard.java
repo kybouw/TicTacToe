@@ -39,13 +39,13 @@ public class PvPBoard extends Board {
 			if(!obj.isFilled()) {
 				obj.setIconX();
 				game.turn(turn+1, coords[0], coords[1]);
-			}
+			}else return;
 			break;
 		case 1: 
 			if(!obj.isFilled()) {
 				obj.setIconO();
 				game.turn(turn+1, coords[0], coords[1]);
-			}
+			}else return;
 			break;
 		}//end switch
 		turn++;
