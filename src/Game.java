@@ -117,15 +117,12 @@ public class Game extends JFrame {
 		board.endGame();
 		switch(player){
 		case 0:
-			System.out.println("It was a tie!");
 			this.score.setText("It's a tie!");
 			return true;
 		case 1:
-			System.out.println("Player X wins!");
 			this.score.setText("Player X wins!");
 			return true;
 		case 2:
-			System.out.println("Player O wins!");
 			this.score.setText("Player O wins!");
 			return true;
 		default:
