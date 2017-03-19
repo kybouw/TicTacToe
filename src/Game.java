@@ -77,7 +77,7 @@ public class Game extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//TODO JOptionPane difficulty selector
-		changeGameMode();
+		selectGameMode();
 		add(board);
 
 		this.gameBoard = new int[3][3];
@@ -142,7 +142,7 @@ public class Game extends JFrame {
 	/**
 	 * 
 	 */
-	private void changeGameMode()
+	private void selectGameMode()
 	{
 		String[] diffs = {"PvP", "Easy", "Hard"};
 		gameMode = JOptionPane.showOptionDialog(this,
