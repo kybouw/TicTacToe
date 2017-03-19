@@ -40,12 +40,15 @@ public class HardBoard extends Board {
 			obj.setIconX();
 			this.moves.add(coords);
 			game.turn(1, coords[0], coords[1]);
+			System.out.println("Player X has taken their turn");
 		}
 		if(!game.isGameOver()) {
 			takeAITurn();
+			System.out.println("TargetRow and Col have been set");
 			int i = (3*targetRow)+targetCol;
 			butts[i].setIconO();
 			game.turn(2, targetRow, targetCol);
+			System.out.println("Player O has taken their turn");
 		}
 	}
 
@@ -54,6 +57,7 @@ public class HardBoard extends Board {
 	 */
 	private void takeAITurn()
 	{
+		System.out.println("Taking AI turn");
 		tagWins();
 	}
 	/**
@@ -63,8 +67,8 @@ public class HardBoard extends Board {
 	private boolean tagWins()
 	{
 
+		System.out.println("Checking for winning moves");
 		if(checkThrees(true)) return true;
-		
 		return blockWins();
 	}
 	/**
@@ -73,6 +77,7 @@ public class HardBoard extends Board {
 	 */
 	private boolean blockWins()
 	{
+		System.out.println("Checking to block winning moves");
 		if(checkThrees(false)) return true;
 		return tagCorners();
 	}
@@ -82,6 +87,7 @@ public class HardBoard extends Board {
 	 */
 	private boolean tagCorners()
 	{
+		System.out.println("Picking a corner to play");
 		int[] lastMove = this.moves.get(this.moves.size() -1);
 		int[][] corners = { {0,0}, {0,2}, {2,0}, {2,2} };
 		boolean isCorner = true;
@@ -95,7 +101,7 @@ public class HardBoard extends Board {
 			if(lastMove[1] == 0) targetc = 0;
 			else if(lastMove[1] == 2) targetc = 2;
 		}
-		if(targetr > -1 && targetc > -1) {
+		if(targetr > -1 && targetc > -1 && (!butts[(3*targetr)+targetc].isFilled())) {
 			targetRow = targetr;
 			targetCol = targetc;
 			return true;
@@ -117,6 +123,7 @@ public class HardBoard extends Board {
 	 */
 	private boolean tagEmpty()
 	{
+		System.out.println("Picking a random empty space");
 		boolean searching = true;
 		int arow, acol;
 		while(searching){
