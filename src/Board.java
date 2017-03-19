@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
  *  hold everything that the player has to interact with. 
  * It will hold the logic for making moves.
  * 
- * @version 0.0.1
  */
 public abstract class Board extends JPanel implements ActionListener
 {

@@ -5,9 +5,6 @@ import javax.swing.JButton;
  * This is the XOButton Object, a child of JButton. 
  * Has images that the user sees.
  * 
- * @version 0.0.1
- * 
- *
  */
 public class XOButton extends JButton {
 
