@@ -54,6 +54,9 @@ public class Game extends JFrame {
 	 * 
 	 */
 	private int gameMode;
+	
+	private Player player1;
+	private Player player2;
 
 	/**
 	 * Main method
