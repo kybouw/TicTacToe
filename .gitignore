@@ -1,0 +1,8 @@
+#ignore compiled binaries
+bin/
+#ignore documentation
+doc/
+#ignore my notes
+notes.txt
+# ignore the backed up src folder
+srcbak/
