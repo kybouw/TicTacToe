@@ -1,3 +1,4 @@
+package components;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Board;
+import EasyBoard;
+import Game;
+import HardBoard;
+import PvPBoard;
+import players.Player;
 
 /**
  * This is the JFrame that pulls everything together. It will contain a model of

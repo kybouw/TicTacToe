@@ -1,3 +1,5 @@
+package players;
+import components.Board;
 
 public abstract class Player {
 

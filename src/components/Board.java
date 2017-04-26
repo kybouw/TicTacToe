@@ -1,7 +1,11 @@
+package components;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
+
+import Game;
+import XOButton;
 
 public class Board extends JPanel {
 
