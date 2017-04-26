@@ -11,11 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Board;
-import EasyBoard;
-import Game;
-import HardBoard;
-import PvPBoard;
 import players.Player;
 
 /**
@@ -162,7 +157,7 @@ public class Game extends JFrame {
 				JOptionPane.PLAIN_MESSAGE, 
 				null, 
 				diffs, diffs[0]);
-		
+		/*
 		switch (gameMode) {
 		case 0:
 			this.board = new PvPBoard(this);
@@ -179,6 +174,7 @@ public class Game extends JFrame {
 			this.board = new PvPBoard(this);
 			break;
 		}// end switch
+		*/
 	}
 	/**
 	 * Ends the game in reference to Game, calls the board's endGame method
