@@ -6,3 +6,8 @@ doc/
 notes.txt
 # ignore the backed up src folder
 srcbak/
+#what is this desktop bs
+desktop.ini
+# Eclipse BS
+.project
+.classpath
