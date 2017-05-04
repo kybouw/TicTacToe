@@ -1,16 +1,24 @@
 package components;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
+import players.Computer;
+import players.Easy;
+import players.Hard;
+import players.Human;
 import players.Player;
 
 /**
@@ -32,7 +40,7 @@ public class Game extends JFrame {
 	 */
 	int[][] gameBoard;
 	/**
-	 * The JPanel that contains the buttons and gameMode logic
+	 * The JPanel that contains the buttons
 	 */
 	private Board board;
 	/**
@@ -88,6 +96,9 @@ public class Game extends JFrame {
 
 		this.gameBoard = new int[3][3];
 		this.scorePanel = new JPanel();
+		
+		//Set up the players
+		//TODO create a window for the players to select their icon
 		
 		this.scorePanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -150,31 +161,136 @@ public class Game extends JFrame {
 	 */
 	private void selectGameMode()
 	{
-		String[] diffs = {"PvP", "Easy", "Hard"};
-		gameMode = JOptionPane.showOptionDialog(this,
-				"Please select a game mode", 
-				"Difficulty Selection", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE, 
-				null, 
-				diffs, diffs[0]);
-		/*
-		switch (gameMode) {
-		case 0:
-			this.board = new PvPBoard(this);
-			break;
-		case 1:
-			this.board = new EasyBoard(this);
-			break;
-		case 2:
-			this.board = new HardBoard(this);
-			break;
-		case -1:
-			System.exit(0);
-		default:
-			this.board = new PvPBoard(this);
-			break;
-		}// end switch
-		*/
+		
+		JFrame gameConfig = new JFrame("Game Settings");
+		gameConfig.setResizable(false);
+		gameConfig.setSize(400, 200);
+		gameConfig.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		String[] player = new String[2];
+		String[] icon = new String[2];
+		
+		//Select what type of player Player1 is
+		JPanel p1Config = new JPanel();
+		ButtonGroup b1 = new ButtonGroup();
+		JRadioButton b11 = new JRadioButton("Human");
+		b1.add(b11);
+		b11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[0] = "Human";
+			}
+		});		
+		JRadioButton b12 = new JRadioButton("Easy");
+		b1.add(b12);
+		b12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[0] = "Easy";
+			}
+		});		
+		JRadioButton b13 = new JRadioButton("Hard");
+		b1.add(b13);
+		b13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[0] = "Hard";
+			}
+		});	
+		
+		p1Config.add(new JLabel("Player 1 mode..."));
+		p1Config.add(b11);
+		p1Config.add(b12);
+		p1Config.add(b13);
+		
+		//Select what type of player Player2 is
+		JPanel p2Config = new JPanel();
+		ButtonGroup b2 = new ButtonGroup();
+		JRadioButton b21 = new JRadioButton("Human");
+		b2.add(b21);
+		b21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[1] = "Human";
+			}
+		});
+		JRadioButton b22 = new JRadioButton("Easy");
+		b2.add(b22);
+		b22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[1] = "Easy";
+			}
+		});
+		JRadioButton b23 = new JRadioButton("Hard");
+		b2.add(b23);
+		b23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player[1] = "Hard";
+			}
+		});
+		
+		p2Config.add(new JLabel("Player 2 mode..."));
+		p2Config.add(b21);
+		p2Config.add(b22);
+		p2Config.add(b23);
+		
+		//select who is X
+		JPanel selectX = new JPanel();
+		ButtonGroup b3 = new ButtonGroup();
+		JRadioButton b31 = new JRadioButton("Player 1");
+		b3.add(b31);
+		b31.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				icon[0] = "X";
+				icon[1] = "O";
+			}
+		});
+		JRadioButton b32 = new JRadioButton("Player 2");
+		b3.add(b32);
+		b32.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				icon[0] = "O";
+				icon[1] = "X";
+			}
+		});
+		selectX.add(new JLabel("Who will be X?"));
+		selectX.add(b31);
+		selectX.add(b32);
+		
+		//Submit button
+		JButton submit = new JButton("Submit");
+		submit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO move on
+				setConfig(player, icon);
+				gameConfig.dispose();
+			}
+		});
+		
+		JPanel gameConfigP = new JPanel();
+
+		gameConfigP.add(p1Config);
+		gameConfigP.add(p2Config);
+		gameConfigP.add(selectX);
+		gameConfigP.add(submit);
+		
+		gameConfig.add(gameConfigP);
+		
+		gameConfig.setVisible(true);
+		
+		
+		
+	}
+	
+	public void setConfig(String[] player, String[] icon) {
+		if(player[0].equals("Human")) 
+			this.player1 = new Human(board, (icon[0].equals("X"))); 
+		else if(player[0].equals("Easy"))
+			this.player1 = new Easy(board, (icon[0].equals("X")));
+		else if(player[0].equals("Hard"))
+			this.player1 = new Hard(board, (icon[0].equals("X")));
+		if(player[1].equals("Human")) 
+			this.player2 = new Human(board, (icon[1].equals("X"))); 
+		else if(player[1].equals("Easy"))
+			this.player2 = new Easy(board, (icon[1].equals("X")));
+		else if(player[1].equals("Hard"))
+			this.player2 = new Hard(board, (icon[1].equals("X")));
 	}
 	/**
 	 * Ends the game in reference to Game, calls the board's endGame method
