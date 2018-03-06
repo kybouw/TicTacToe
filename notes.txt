@@ -1,0 +1,13 @@
+Have a counter that keeps track of the number of turns.
+if the counter is even, then it is player one's turn, on click, increment.
+counter should be in board
+
+have a game over method that will end the game for you
+
+Make different boards for different games, then have one 'driver' class called game that runs it. Abstract the Board class and just make EasyBoard, HardBoard, and PvPBoard.
+
+give each XOButton an action command that specifies the row and col of the button when clicked. Create turn methods(player and comp) that take row and col as input. This way, you have parallel boards, the players viewable one and the computer's analysis table.
+
+turn method should make sure that the cell is empty then make a placement.
+
+JLabel has setText method for scoreboard
