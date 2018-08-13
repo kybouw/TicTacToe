@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
 
+import components.Board;
+import components.Game;
+
 /**
  * This is a Player versus Player Board model. There are two players, X and O, X goes first. 
  * This contains how the move/turn system works and how the player(s) interacts with the game.

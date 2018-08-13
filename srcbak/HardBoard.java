@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
+import components.Game;
 /**
  * This is the Hard game mode. The board will deliberately try to beat the player.
  *

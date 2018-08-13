@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import components.Board;
+import components.Game;
+
 /**
  * This is the JFrame that pulls everything together. It will contain a model of
  * the board that will be used to analyze the game's state and outcome. It will

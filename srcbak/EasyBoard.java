@@ -1,4 +1,6 @@
 import java.awt.event.ActionEvent;
+
+import components.Game;
 /**
  * The easy board. The AI will just randomly place their pieces in empty cells.
  * 

@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
 
+import components.Board;
+import components.Game;
+
 public abstract class AIBoard extends Board {
 
 	/**
